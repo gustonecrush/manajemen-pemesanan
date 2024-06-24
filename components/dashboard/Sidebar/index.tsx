@@ -9,7 +9,11 @@ import { MdOutlineClass } from "react-icons/md";
 import { Rubik } from "next/font/google";
 import { FaBoxOpen, FaRupiahSign } from "react-icons/fa6";
 import { IoMdSchool } from "react-icons/io";
-import { TbDatabaseCog, TbFileCertificate, TbShoppingCartFilled } from "react-icons/tb";
+import {
+  TbDatabaseCog,
+  TbFileCertificate,
+  TbShoppingCartFilled,
+} from "react-icons/tb";
 import LogoFooter from "@/components/ui/logo-footer";
 import { HiChartBar } from "react-icons/hi2";
 
@@ -68,8 +72,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-50 flex h-screen w-72.5 flex-col overflow-y-hidden bg-gray-900 duration-300 ease-linear  lg:static lg:translate-x-0 scrollbar-hide ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+      className={`absolute left-0 top-0 z-50 flex h-screen w-72.5 flex-col overflow-y-hidden bg-gray-900 duration-300 ease-linear  lg:static lg:translate-x-0 scrollbar-hide ${
+        sidebarOpen ? "translate-x-0" : "-translate-x-full"
+      }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 pb-5.5 lg:pb-6.5">
@@ -131,10 +136,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <React.Fragment>
                       <Link
                         href="/admin/operator/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark  ${(pathname === "/" ||
-                          pathname.includes("dashboard")) &&
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark  ${
+                          (pathname === "/" ||
+                            pathname.includes("dashboard")) &&
                           "bg-graydark "
-                          }`}
+                        }`}
                       >
                         <svg
                           className="fill-current"
@@ -179,10 +185,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <React.Fragment>
                         <Link
                           href="#"
-                          className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark  ${(pathname === "/pemesanan" ||
-                            pathname.includes("pemesanan")) &&
+                          className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark  ${
+                            (pathname === "/pemesanan" ||
+                              pathname.includes("pemesanan")) &&
                             "bg-graydark "
-                            }`}
+                          }`}
                           onClick={(e) => {
                             e.preventDefault();
                             sidebarExpanded
@@ -193,8 +200,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <TbShoppingCartFilled className="text-xl" />
                           Pemesanan
                           <svg
-                            className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${open && "rotate-180"
-                              }`}
+                            className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                              open && "rotate-180"
+                            }`}
                             width="20"
                             height="20"
                             viewBox="0 0 20 20"
@@ -211,38 +219,42 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         </Link>
                         {/* <!-- Dropdown Menu Start --> */}
                         <div
-                          className={`translate transform overflow-hidden ${!open && "hidden"
-                            }`}
+                          className={`translate transform overflow-hidden ${
+                            !open && "hidden"
+                          }`}
                         >
                           <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
                             <li>
                               <Link
                                 href="/admin/operator/pemesanan"
-                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === "/admin/operator/pemesanan" &&
+                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                  pathname === "/admin/operator/pemesanan" &&
                                   "text-white"
-                                  }`}
+                                }`}
                               >
                                 • Data Pemesanan
                               </Link>
                             </li>
                             <li>
                               <Link
-                                href="/admin/operator/pemesanan/pemberitahuan-pemesanan"
-                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname ===
-                                  "/admin/lemdiklat/pemesanan/pemberitahuan-pemesanan" &&
+                                href="#"
+                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                  pathname ===
+                                    "/admin/lemdiklat/pemesanan/pemberitahuan-pemesanan" &&
                                   "text-white"
-                                  }`}
+                                }`}
                               >
                                 • Invoice Pemesanan
                               </Link>
                             </li>
                             <li>
                               <Link
-                                href="/admin/operator/pemesanan/pengajuan-sttpl"
-                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname ===
-                                  "/admin/operator/pemesanan/pengajuan-sttpl" &&
+                                href="#"
+                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                  pathname ===
+                                    "/admin/operator/pemesanan/pengajuan-sttpl" &&
                                   "text-white"
-                                  }`}
+                                }`}
                               >
                                 • Nota Jalan Pemesanan
                               </Link>
@@ -254,9 +266,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     );
                   }}
                 </SidebarLinkGroup>
-              ) : (
-                null
-              )}
+              ) : null}
 
               {pathname.includes("operator") && (
                 <SidebarLinkGroup
@@ -269,10 +279,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <React.Fragment>
                         <Link
                           href="#"
-                          className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark  ${(pathname === "/forms" ||
-                            pathname.includes("forms")) &&
+                          className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark  ${
+                            (pathname === "/forms" ||
+                              pathname.includes("forms")) &&
                             "bg-graydark "
-                            }`}
+                          }`}
                           onClick={(e) => {
                             e.preventDefault();
                             sidebarExpanded
@@ -283,8 +294,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <FaBoxOpen className="text-xl" />
                           Barang
                           <svg
-                            className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${open && "rotate-180"
-                              }`}
+                            className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                              open && "rotate-180"
+                            }`}
                             width="20"
                             height="20"
                             viewBox="0 0 20 20"
@@ -301,28 +313,31 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         </Link>
                         {/* <!-- Dropdown Menu Start --> */}
                         <div
-                          className={`translate transform overflow-hidden ${!open && "hidden"
-                            }`}
+                          className={`translate transform overflow-hidden ${
+                            !open && "hidden"
+                          }`}
                         >
                           <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
                             <li>
                               <Link
-                                href="/admin/lemdiklat/fasilitas/penginapan"
-                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname ===
-                                  "/admin/lemdiklat/fasilitas/penginapan" &&
+                                href="#"
+                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                  pathname ===
+                                    "/admin/lemdiklat/fasilitas/penginapan" &&
                                   "text-white"
-                                  }`}
+                                }`}
                               >
                                 • Data Barang
                               </Link>
                             </li>
                             <li>
                               <Link
-                                href="/admin/lemdiklat/fasilitas/konsumsi"
-                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname ===
-                                  "/admin/lemdiklat/fasilitas/konsumsi" &&
+                                href="#"
+                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                  pathname ===
+                                    "/admin/lemdiklat/fasilitas/konsumsi" &&
                                   "text-white"
-                                  }`}
+                                }`}
                               >
                                 • Barang Yang Dipesan
                               </Link>
@@ -338,11 +353,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               <li>
                 <Link
-                  href="/admin/operator/pnbp"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark  ${(pathname === "/admin/operator/pnbp" ||
-                    pathname.includes("pnbp")) &&
+                  href="#"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark  ${
+                    (pathname === "/admin/operator/pnbp" ||
+                      pathname.includes("pnbp")) &&
                     "bg-graydark "
-                    }`}
+                  }`}
                 >
                   <HiChartBar className="text-xl" />
                   Laporan
@@ -360,10 +376,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <React.Fragment>
                         <Link
                           href="#"
-                          className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark  ${(pathname === "/forms" ||
-                            pathname.includes("forms")) &&
+                          className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark  ${
+                            (pathname === "/forms" ||
+                              pathname.includes("forms")) &&
                             "bg-graydark "
-                            }`}
+                          }`}
                           onClick={(e) => {
                             e.preventDefault();
                             sidebarExpanded
@@ -372,10 +389,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           }}
                         >
                           <TbDatabaseCog className="text-xl" />
-                          DUser
+                          User
                           <svg
-                            className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${open && "rotate-180"
-                              }`}
+                            className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                              open && "rotate-180"
+                            }`}
                             width="20"
                             height="20"
                             viewBox="0 0 20 20"
@@ -392,16 +410,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         </Link>
                         {/* <!-- Dropdown Menu Start --> */}
                         <div
-                          className={`translate transform overflow-hidden ${!open && "hidden"
-                            }`}
+                          className={`translate transform overflow-hidden ${
+                            !open && "hidden"
+                          }`}
                         >
                           <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
                             <li>
                               <Link
                                 href="/forms/form-elements"
-                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === "/forms/form-elements" &&
+                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                  pathname === "/forms/form-elements" &&
                                   "text-white"
-                                  }`}
+                                }`}
                               >
                                 Role Pengguna
                               </Link>
@@ -409,9 +429,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <li>
                               <Link
                                 href="/forms/form-elements"
-                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === "/forms/form-elements" &&
+                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                  pathname === "/forms/form-elements" &&
                                   "text-white"
-                                  }`}
+                                }`}
                               >
                                 Pengguna
                               </Link>
