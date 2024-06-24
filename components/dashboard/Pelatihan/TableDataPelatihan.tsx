@@ -143,22 +143,54 @@ const TableDataPelatihan: React.FC = () => {
   const [detailPemesanan, setDetailPemesanan] = React.useState<string>("");
 
   const handleUploadDataPemesanan = async (e: any) => {
+    const userId = Cookies.get("XSRF098888");
+
     const data = new FormData();
-    data.append("user_id", "1");
+    data.append("user_id", userId!);
     data.append("pemesanan", namaPemesanan);
     data.append("detail_pemesanan", detailPemesanan);
     data.append("tanggal_pemesanan", tanggalPemesanan);
     data.append("unit", unitPemesanan);
 
     try {
-      const response = await axios.post(`${baseUrl}/api/pemesanans`);
+      const response = await axios.post(`${baseUrl}/api/pemesanans`, data);
       console.log("UPLOAD DATA PEMESANAN : ", response);
+      Toast.fire({
+        icon: "success",
+        title: `Sukses menambahkan data pemesanan!`,
+      });
+      setIsOpenFormMateri(!isOpenFormMateri);
+      handleFetchingDataPemesanan();
     } catch (error) {
       console.error("ERROR UPLOAD DATA PEMESANAN : ", error);
       Toast.fire({
         icon: "error",
-        title: `Gagal mengupload data pemesanan, harap coba lagi nanti!`,
+        title: `Gagal menambahkan data pemesanan, harap coba lagi nanti!`,
       });
+      setIsOpenFormMateri(!isOpenFormMateri);
+      handleFetchingDataPemesanan();
+      throw error;
+    }
+  };
+
+  const handleDeleteDataPemesanan = async (e: any, id: number) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.delete(`${baseUrl}/api/pemesanans/${id}`);
+      console.log("DELETE DATA PEMESANAN : ", response);
+      Toast.fire({
+        icon: "success",
+        title: `Sukses menghapus data pemesanan!`,
+      });
+      handleFetchingDataPemesanan();
+    } catch (error) {
+      console.error("ERROR DELETE DATA PEMESANAN : ", error);
+      Toast.fire({
+        icon: "error",
+        title: `Gagal menghapus data pemesanan, harap coba lagi nanti!`,
+      });
+      handleFetchingDataPemesanan();
       throw error;
     }
   };
@@ -245,7 +277,7 @@ const TableDataPelatihan: React.FC = () => {
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogTitle>
-                    Apakah kamu yakin menghapus pelatihan ini?
+                    Apakah kamu yakin menghapus data pemesanan ini?
                   </AlertDialogTitle>
                   <AlertDialogDescription>
                     Penghapusan data ini akan dilakukan secara permanen,
@@ -274,7 +306,7 @@ const TableDataPelatihan: React.FC = () => {
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogTitle>
-                    Apakah kamu yakin menghapus pelatihan ini?
+                    Apakah kamu yakin menghapus data pemesanan ini?
                   </AlertDialogTitle>
                   <AlertDialogDescription>
                     Penghapusan data ini akan dilakukan secara permanen,
@@ -284,7 +316,12 @@ const TableDataPelatihan: React.FC = () => {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Batal</AlertDialogCancel>
-                  <AlertDialogAction className="bg-rose-600">
+                  <AlertDialogAction
+                    onClick={(e) =>
+                      handleDeleteDataPemesanan(e, row.original.id)
+                    }
+                    className="bg-rose-600"
+                  >
                     Hapus
                   </AlertDialogAction>
                 </AlertDialogFooter>

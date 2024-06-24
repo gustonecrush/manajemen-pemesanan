@@ -74,11 +74,10 @@ function page() {
       Cookies.set("XSRF091", response.data.authorization.token);
       Cookies.set("XSRF092", "true");
       Cookies.set("XSRF093", role == "1" ? "Admin" : "Marketing");
+      Cookies.set("XSRF098888", response.data.user.id);
 
       resetAllStateToEmptyString();
-      router.push(
-        `/admin/${role == "1" ? "operator" : "marketing"}/dashboard`
-      );
+      router.push(`/admin/${role == "1" ? "operator" : "marketing"}/dashboard`);
     } catch (error) {
       console.error("Error saat melakukan login", error);
       Toast.fire({
@@ -98,7 +97,9 @@ function page() {
         }}
       >
         <Image
-          src={"https://sp-ao.shortpixel.ai/client/q_lossy,ret_img,w_1000,h_658/http://limus.id/wp-content/uploads/2018/11/WhatsApp-Image-2018-11-30-at-16.29.511-1000x658.jpeg"}
+          src={
+            "https://sp-ao.shortpixel.ai/client/q_lossy,ret_img,w_1000,h_658/http://limus.id/wp-content/uploads/2018/11/WhatsApp-Image-2018-11-30-at-16.29.511-1000x658.jpeg"
+          }
           className="absolute w-full h-screen object-cover duration-1000"
           alt=""
           layout="fill"

@@ -112,6 +112,8 @@ const DropdownUser = ({
   const handleLogOut = async () => {
     Cookies.remove("XSRF091");
     Cookies.remove("XSRF092");
+    Cookies.remove("XSRF093");
+    Cookies.remove("XSRF098888");
     Toast.fire({
       icon: "success",
       title: `Berhasil logout dari dashboard Admin!`,
