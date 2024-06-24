@@ -1,0 +1,10 @@
+export type Pemesanan = {
+  id: number
+  user_id: number
+  pemesanan: string
+  detail_pemesanan: string
+  tanggal_pemesanan: string
+  unit: number
+  created_at: string
+  updated_at: string
+}

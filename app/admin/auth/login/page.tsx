@@ -17,15 +17,10 @@ import {
   SelectValue,
   SelectLabel,
 } from "@/components/ui/select";
-import { FiSlack } from "react-icons/fi";
 import { HiMiniUserGroup } from "react-icons/hi2";
-import ReCAPTCHA from "react-google-recaptcha";
-
 function page() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const router = useRouter();
-
-  const [captcha, setCaptcha] = React.useState<string | null>()
 
   /*
     state variables for login
@@ -61,11 +56,8 @@ function page() {
 
     try {
       const response: AxiosResponse = await axios.post(
-        `${baseUrl}/${role}/login`,
-        JSON.stringify({
-          email: email,
-          password: password,
-        }),
+        `${baseUrl}/api/login`,
+        data,
         {
           headers: {
             "Content-Type": "application/json",
@@ -76,16 +68,16 @@ function page() {
       console.log("Successfully logged in");
       Toast.fire({
         icon: "success",
-        title: `Berhasil login ke admin E-LAUT!`,
+        title: `Berhasil login ke admin sistem manajemen pemesanan!`,
       });
 
-      Cookies.set("XSRF091", response.data.t);
+      Cookies.set("XSRF091", response.data.authorization.token);
       Cookies.set("XSRF092", "true");
-      Cookies.set("XSRF093", role == "lemdik" ? "lemdiklat" : "pusat");
+      Cookies.set("XSRF093", role == "1" ? "Admin" : "Marketing");
 
       resetAllStateToEmptyString();
       router.push(
-        `/admin/${role == "lemdik" ? "lemdiklat" : "pusat"}/dashboard`
+        `/admin/${role == "1" ? "operator" : "marketing"}/dashboard`
       );
     } catch (error) {
       console.error("Error saat melakukan login", error);
@@ -106,7 +98,7 @@ function page() {
         }}
       >
         <Image
-          src={"/images/hero-img3.jpg"}
+          src={"https://sp-ao.shortpixel.ai/client/q_lossy,ret_img,w_1000,h_658/http://limus.id/wp-content/uploads/2018/11/WhatsApp-Image-2018-11-30-at-16.29.511-1000x658.jpeg"}
           className="absolute w-full h-screen object-cover duration-1000"
           alt=""
           layout="fill"
@@ -126,18 +118,18 @@ function page() {
           <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
         </div>
         <div className="w-full py-6 z-20 bg-black">
-          <h1 className="my-6 font-calsans text-4xl">
-            <Image
+          <h1 className="my-6 font-calsans text-white text-4xl mb-8 leading-[100%]">
+            {/* <Image
               className="w-16 md:w-32 mx-auto my-3"
               width={0}
               height={0}
               src={"/logo-kkp-white.png"}
               priority
               alt="Kementrian Kelautan dan Perikanan RI Logo"
-            />
-            Log In Admin
+            /> */}
+            Masuk Admin <br /> Fajar Teknika
           </h1>
-          <p className="text-gray-100 w-2/3 mx-auto -mt-6">
+          <p className="text-gray-300 w-2/3 mx-auto -mt-6">
             Selamat datang kembali, silahkan login untuk mengakses dashboard
             admin!
           </p>
@@ -152,14 +144,14 @@ function page() {
                 name="email"
                 id="email"
                 placeholder="Email"
-                className="block w-full p-4 text-base bg-black rounded-3xl border-white border"
+                className="block w-full p-4 text-base rounded-3xl border-white bg-black border"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="pb-2 pt-4">
               <input
-                className="block w-full p-4 text-base bg-black rounded-3xl border-white border"
+                className="block w-full p-4 text-base rounded-3xl border-white bg-black border"
                 type="password"
                 name="password"
                 id="password"
@@ -177,27 +169,25 @@ function page() {
                   <p className="mr-3 flex items-center gap-1 text-base">
                     <HiMiniUserGroup />
                     {role != ""
-                      ? role == "adminPusat"
-                        ? "Admin Pusat"
-                        : "Lemdiklat"
+                      ? role == "1"
+                        ? "Admin"
+                        : "Marketing"
                       : "Pilih Role"}
                   </p>
                 </SelectTrigger>
                 <SelectContent side="top">
                   <SelectGroup>
                     <SelectLabel>Role</SelectLabel>
-                    <SelectItem value="adminPusat">Admin Pusat</SelectItem>
-                    <SelectItem value="lemdik">Admin Balai</SelectItem>
+                    <SelectItem value="1">Admin</SelectItem>
+                    <SelectItem value="2">Marketing</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
             </div>
-            <ReCAPTCHA sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!} className="mx-auto w-full font-inter text-sm" onChange={setCaptcha} />
             <div className="pb-2 pt-4">
               <button
                 type="submit"
-                className={`capitalize block w-full p-3 text-lg rounded-lg ${captcha ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-500 hover:bg-gray-600'} focus:outline-none`}
-                disabled={captcha ? false : true}
+                className={`capitalize block w-full p-3 text-lg rounded-lg bg-blue-500 hover:bg-blue-600' focus:outline-none`}
               >
                 sign in
               </button>

@@ -9,10 +9,10 @@ export default function LogoFooter() {
       aria-label="Cruip"
     >
       <Image
-        className="w-16 md:w-20"
+        className="w-16 md:w-32 rounded-lg"
         width={0}
         height={0}
-        src={"/logo-kkp-white.png"}
+        src={"/images/logo-fajar-teknika.png"}
         alt="Kementrian Kelautan dan Perikanan RI Logo"
       />
     </Link>
