@@ -26,10 +26,10 @@ export function middleware(request: any) {
 
   if (!XSRF092) {
     const protectedPaths = [
-      '/admin/lemdiklat/dashboard',
-      '/admin/lemdiklat/pelatihan',
-      '/admin/lemdiklat/pelatihan/tambah-pelatihan',
-      '/admin/lemdiklat/pelatihan/penerbitan-sttpl',
+      '/admin/operator/dashboard',
+      '/admin/operator/pemesanan',
+      '/admin/operator/pelatihan/tambah-pelatihan',
+      '/admin/operator/pelatihan/penerbitan-sttpl',
     ]
 
     if (protectedPaths.includes(request.nextUrl.pathname)) {
@@ -40,7 +40,7 @@ export function middleware(request: any) {
 
     if (protectedPaths.includes(request.nextUrl.pathname)) {
       return NextResponse.redirect(
-        new URL('/admin/lemdiklat/pelatihan', request.url),
+        new URL('/admin/operator/pemesanan', request.url),
       )
     }
   }

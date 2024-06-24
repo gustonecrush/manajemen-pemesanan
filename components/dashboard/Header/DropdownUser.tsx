@@ -399,14 +399,14 @@ const DropdownUser = ({
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black">
-            {pathname.includes("lemdiklat")
+            {pathname.includes("operator")
               ? userLoggedInInfo?.data?.NamaLemdik
-              : "BPPP"}
+              : "Admin"}
           </span>
           <span className="block text-xs">
-            {pathname.includes("lemdiklat")
+            {pathname.includes("operator")
               ? userLoggedInInfo?.data?.Alamat
-              : "Pusat Pelatihan KP"}
+              : "CV Fajar Teknika"}
           </span>
         </span>
 

@@ -121,20 +121,47 @@ const TableDataPelatihan: React.FC = () => {
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-
   const [isFetching, setIsFetching] = React.useState<boolean>(false);
 
   const [data, setData] = React.useState<Pemesanan[]>([]);
   const handleFetchingDataPemesanan = async () => {
     try {
-      const response: AxiosResponse = await axios.get(`${baseUrl}/api/pemesanans`)
-      setData(response.data)
-      console.log('FETCHCING DATA PEMESANAN : ', response)
+      const response: AxiosResponse = await axios.get(
+        `${baseUrl}/api/pemesanans`
+      );
+      setData(response.data);
+      console.log("FETCHCING DATA PEMESANAN : ", response);
     } catch (error) {
-      console.error('ERROR FETCHING DATA PEMESANAN : ', error)
+      console.error("ERROR FETCHING DATA PEMESANAN : ", error);
       throw error;
     }
-  }
+  };
+
+  const [namaPemesanan, setNamaPemesanan] = React.useState<string>("");
+  const [tanggalPemesanan, setTanggalPemesanan] = React.useState<string>("");
+  const [unitPemesanan, setUnitPemesanan] = React.useState<string>("");
+  const [detailPemesanan, setDetailPemesanan] = React.useState<string>("");
+
+  const handleUploadDataPemesanan = async (e: any) => {
+    const data = new FormData();
+    data.append("user_id", "1");
+    data.append("pemesanan", namaPemesanan);
+    data.append("detail_pemesanan", detailPemesanan);
+    data.append("tanggal_pemesanan", tanggalPemesanan);
+    data.append("unit", unitPemesanan);
+
+    try {
+      const response = await axios.post(`${baseUrl}/api/pemesanans`);
+      console.log("UPLOAD DATA PEMESANAN : ", response);
+    } catch (error) {
+      console.error("ERROR UPLOAD DATA PEMESANAN : ", error);
+      Toast.fire({
+        icon: "error",
+        title: `Gagal mengupload data pemesanan, harap coba lagi nanti!`,
+      });
+      throw error;
+    }
+  };
 
   const [statusPelatihan, setStatusPelatihan] = React.useState("");
 
@@ -198,7 +225,6 @@ const TableDataPelatihan: React.FC = () => {
       },
       cell: ({ row }) => (
         <div className="flex w-fit flex-col gap-2">
-
           <div className={`${"flex"} flex items-center justify-center gap-1`}>
             <Button
               variant="outline"
@@ -264,7 +290,6 @@ const TableDataPelatihan: React.FC = () => {
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
-
           </div>
         </div>
       ),
@@ -361,7 +386,7 @@ const TableDataPelatihan: React.FC = () => {
   });
 
   React.useEffect(() => {
-    handleFetchingDataPemesanan()
+    handleFetchingDataPemesanan();
   }, []);
 
   return (
@@ -371,12 +396,12 @@ const TableDataPelatihan: React.FC = () => {
           <AlertDialogHeader>
             <AlertDialogTitle className="flex items-center gap-2">
               {" "}
-              <FaBookOpen className="h-4 w-4" />
-              Tambah Materi Pelatihan
+              <TbShoppingCart className="h-4 w-4" />
+              Tambah Data Pemesanan
             </AlertDialogTitle>
-            <AlertDialogDescription className="-mt-2">
-              Daftarkan materi pelatihan yang diselenggarakan yang nantinya akan
-              tercantum pada sertifikat peserta pelatihan!
+            <AlertDialogDescription className="-mt-10">
+              Tambahkan data pemesanan-mu segera sekarang agar terlist riwayat
+              pemesanan yang masuk ke CV!
             </AlertDialogDescription>
           </AlertDialogHeader>
           <fieldset>
@@ -387,87 +412,77 @@ const TableDataPelatihan: React.FC = () => {
                     className="block text-gray-800 text-sm font-medium mb-1"
                     htmlFor="name"
                   >
-                    Nama Materi <span className="text-red-600">*</span>
+                    Pemesanan <span className="text-red-600">*</span>
                   </label>
                   <input
-                    id="name"
+                    id="pemesanan"
                     type="text"
                     className="form-input w-full text-black border-gray-300 rounded-md"
-                    placeholder="Masukkan nama materi"
+                    placeholder="Masukkan judul pemesanan"
                     required
-                    value={namaMateri}
-                    onChange={(e) => setNamaMateri(e.target.value)}
+                    value={namaPemesanan}
+                    onChange={(e) => setNamaPemesanan(e.target.value)}
                   />
                 </div>
               </div>
 
-              <div className="flex gap-2 w-full">
-                <div className="flex gap-2 mb-1 w-full">
-                  <div className="w-full">
-                    <label
-                      className="block text-gray-800 text-sm font-medium mb-1"
-                      htmlFor="name"
-                    >
-                      Jam Teori <span className="text-red-600">*</span>
-                    </label>
-                    <input
-                      id="name"
-                      type="text"
-                      className="form-input w-full text-black border-gray-300 rounded-md"
-                      placeholder="Jam Pelajaran"
-                      required
-                      value={jamTeori}
-                      onChange={(e) => setJamTeori(e.target.value)}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <label
-                      className="block text-gray-800 text-sm font-medium mb-1"
-                      htmlFor="name"
-                    >
-                      Jam Praktek <span className="text-red-600">*</span>
-                    </label>
-                    <input
-                      id="name"
-                      type="text"
-                      className="form-input w-full text-black border-gray-300 rounded-md"
-                      placeholder="Jam Pelajaran"
-                      required
-                      value={jamPraktek}
-                      onChange={(e) => setJamPraktek(e.target.value)}
-                    />
-                  </div>
+              <div className="flex flex-wrap mb-1 w-full">
+                <div className="w-full">
+                  <label
+                    className="block text-gray-800 text-sm font-medium mb-1"
+                    htmlFor="name"
+                  >
+                    Tanggal Pemesanan <span className="text-red-600">*</span>
+                  </label>
+                  <input
+                    id="tanggal_pemesanan"
+                    type="date"
+                    className="form-input w-full text-black border-gray-300 rounded-md"
+                    placeholder="Masukkan nama materi"
+                    required
+                    value={tanggalPemesanan}
+                    onChange={(e) => setTanggalPemesanan(e.target.value)}
+                  />
                 </div>
               </div>
 
-              <div className="flex flex-wrap -mx-3 mb-1">
-                <div className="w-full px-3">
+              <div className="flex flex-wrap mb-1 w-full">
+                <div className="w-full">
                   <label
                     className="block text-gray-800 text-sm font-medium mb-1"
-                    htmlFor="email"
+                    htmlFor="name"
                   >
-                    Upload File Excel Materi{" "}
+                    Unit <span className="text-red-600">*</span>
                   </label>
-                  <div className="flex gap-1">
-                    <input
-                      type="file"
-                      className=" text-black h-10 text-base flex items-center cursor-pointer w-full border border-neutral-200 rounded-md"
-                      required
-                    />
-                    <Link
-                      target="_blank"
-                      href={
-                        "https://docs.google.com/spreadsheets/d/1KlEBRcgXLZK6NCL0r4nglKa6XazHgUH7fqvHlrIHmNI/edit?usp=sharing"
-                      }
-                      className="btn text-white bg-green-600 hover:bg-green-700 py-0 w-[250px] px-0 text-sm"
-                    >
-                      <PiMicrosoftExcelLogoFill />
-                      Unduh Template
-                    </Link>
-                  </div>
-                  <p className="text-gray-700 text-xs mt-1">
-                    *Download template, input data sesuai format template lalu upload
-                  </p>
+                  <input
+                    id="unit"
+                    type="number"
+                    className="form-input w-full text-black border-gray-300 rounded-md"
+                    placeholder="Masukkan unit"
+                    required
+                    value={unitPemesanan}
+                    onChange={(e) => setUnitPemesanan(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-wrap mb-1 w-full">
+                <div className="w-full">
+                  <label
+                    className="block text-gray-800 text-sm font-medium mb-1"
+                    htmlFor="name"
+                  >
+                    Detail Pemesanan <span className="text-red-600">*</span>
+                  </label>
+                  <textarea
+                    rows={7}
+                    id="detail_pemesanan"
+                    className="form-input w-full text-black border-gray-300 rounded-md"
+                    placeholder="Masukkan detail pemesanan"
+                    required
+                    value={detailPemesanan}
+                    onChange={(e) => setDetailPemesanan(e.target.value)}
+                  />
                 </div>
               </div>
 
@@ -478,7 +493,7 @@ const TableDataPelatihan: React.FC = () => {
                   Cancel
                 </AlertDialogCancel>
                 <AlertDialogAction
-
+                  onClick={(e) => handleUploadDataPemesanan(e)}
                 >
                   Upload
                 </AlertDialogAction>
@@ -501,86 +516,7 @@ const TableDataPelatihan: React.FC = () => {
         </>
       ) : showCertificateSetting ? (
         <>
-          {/* Header Tabel Data Pelatihan */}
-          <div className="flex flex-wrap items-center mb-3 justify-between gap-3 sm:flex-nowrap">
-            {/* Statistik Pelatihan */}
-            <div className="hidden w-full flex-wrap gap-3 sm:gap-5">
-              <div className="flex min-w-47.5">
-                <span className="mr-2 mt-1 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-primary">
-                  <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-primary"></span>
-                </span>
-                <div className="w-full">
-                  <p className="font-semibold text-primary">Total Pemesanan</p>
-                  <p className="text-sm font-medium">{data.length} pemesanan</p>
-                </div>
-              </div>
-
-            </div>
-
-            {/* Button Ajukan Permohonan Buka Pelatihan */}
-            <div className="flex w-full gap-2 justify-end">
-              <Sheet>
-                <SheetTrigger asChild>
-                  <div className="inline-flex gap-2 px-3 text-sm items-center rounded-md bg-whiter p-1.5  cursor-pointer">
-                    <PiStampLight />
-                    Add Stempel
-                  </div>
-                </SheetTrigger>
-                <SheetContent>
-                  <SheetHeader>
-                    <div className="flex flex-row items-center gap-2">
-                      <div className="flex flex-col gap-1">
-                        <SheetTitle>Pilih Stempel</SheetTitle>
-                        <SheetDescription>
-                          Pilih stempel tanda tangan elektronik yang ingin anda
-                          taukan ke file sertifikat yang akan digenerate!
-                        </SheetDescription>
-                      </div>
-                    </div>
-                  </SheetHeader>
-                  <div className="w-full mt-5 mb-10">
-                    <div className="w-full border-2 rounded-md hover:cursor-pointer hover:border-blue-500 duration-700 flex items-center flex-col px-3 py-5 text-center justify-center border-dashed">
-                      <p className="-mt-1 text-sm">
-                        Kepala Balai Pelatihan dan Penyuluhan Perikanan
-                        Banyuwangi
-                      </p>
-                      <Image
-                        className="w-[200px] my-3"
-                        width={0}
-                        height={0}
-                        alt="Logo Kementrian Kelautan dan Perikanan RI"
-                        src={"/ttd-elektronik.png"}
-                      />
-                      <p className="-mt-1 font-extrabold text-sm">
-                        MOCH. MUCHLISIN, A.Pi, M.P
-                      </p>
-                      <p className="font-extrabold text-sm -mt-1">
-                        NIP. 197509161999031003
-                      </p>
-                    </div>
-                  </div>
-                  <SheetFooter>
-                    <SheetClose asChild>
-                      <Button type="submit">Sematkan Stempel</Button>
-                    </SheetClose>
-                  </SheetFooter>
-                </SheetContent>
-              </Sheet>
-
-              <div
-                onClick={(e) => setShowFormAjukanPelatihan(true)}
-                className="inline-flex gap-2 px-3 text-sm items-center rounded-md bg-whiter p-1.5  cursor-pointer"
-              >
-                <TbFileCertificate />
-                Generate Sertifikat Peserta
-              </div>
-            </div>
-          </div>
-
-          <div className="max-h-[500px] flex flex-col gap-2 overflow-y-auto scroll-smooth">
-            <SertifikatSettingPage1 />
-            <SertifikatSettingPage2 />
-          </div>
+          <div className="max-h-[500px] flex flex-col gap-2 overflow-y-auto scroll-smooth"></div>
         </>
       ) : (
         <>
@@ -604,13 +540,10 @@ const TableDataPelatihan: React.FC = () => {
           <div>
             <div id="chartOne" className="-ml-5"></div>
             <div className="flex w-full items-center mb-2">
-
-
               <div className="w-full flex justify-end gap-2">
-
                 <div
                   onClick={(e) => {
-                    router.push("/admin/lemdiklat/pelatihan/tambah-pelatihan");
+                    setIsOpenFormMateri(!isOpenFormMateri);
                   }}
                   className="flex gap-2 px-3 text-sm items-center rounded-md bg-whiter p-1.5  cursor-pointer w-fit"
                 >
