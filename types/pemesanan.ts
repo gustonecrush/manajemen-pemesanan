@@ -8,6 +8,7 @@ export type Pemesanan = {
   created_at: string
   updated_at: string
   pemesan: string;
+  barangs: Barang[];
 }
 
 export type Barang = {
@@ -16,6 +17,15 @@ export type Barang = {
   nama_barang: string
   harga_jual: number
   stok_barang: number
+  created_at: string
+  updated_at: string
+}
+
+export type BarangPemesanan = {
+  id: number
+  id_barang: number
+  id_pemesanan: number
+  kuantitas: number
   created_at: string
   updated_at: string
 }

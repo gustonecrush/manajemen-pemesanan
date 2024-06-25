@@ -55,6 +55,7 @@ import {
   TbDatabaseEdit,
   TbFileCertificate,
   TbFileDigit,
+  TbFileInvoice,
   TbFishChristianity,
   TbMoneybag,
   TbQrcode,
@@ -92,7 +93,12 @@ import Image from "next/image";
 import axios, { AxiosResponse } from "axios";
 import { Checkbox } from "@/components/ui/checkbox";
 import { PelatihanMasyarakat } from "@/types/product";
-import { FaBookOpen, FaBoxOpen, FaRupiahSign } from "react-icons/fa6";
+import {
+  FaBookOpen,
+  FaBoxOpen,
+  FaPaperPlane,
+  FaRupiahSign,
+} from "react-icons/fa6";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -111,7 +117,7 @@ import { GiBookmarklet } from "react-icons/gi";
 import { DialogSertifikatPelatihan } from "@/components/sertifikat/dialogSertifikatPelatihan";
 import { DialogTemplateSertifikatPelatihan } from "@/components/sertifikat/dialogTemplateSertifikatPelatihan";
 import Link from "next/link";
-import { Pemesanan } from "@/types/pemesanan";
+import { Barang, Pemesanan } from "@/types/pemesanan";
 
 const TableDataPelatihan: React.FC = () => {
   const [showFormAjukanPelatihan, setShowFormAjukanPelatihan] =
@@ -273,6 +279,18 @@ const TableDataPelatihan: React.FC = () => {
     }
   };
 
+  const [dataBarang, setDataBarang] = React.useState<Barang[]>([]);
+  const handleFetchingDataBarang = async () => {
+    try {
+      const response: AxiosResponse = await axios.get(`${baseUrl}/api/barangs`);
+      setDataBarang(response.data);
+      console.log("FETCHCING DATA BARANG : ", response);
+    } catch (error) {
+      console.error("ERROR FETCHING DATA BARANG : ", error);
+      throw error;
+    }
+  };
+
   const [isOpenFormMateri, setIsOpenFormMateri] =
     React.useState<boolean>(false);
   const [selectedId, setSelectedId] = React.useState<number>(0);
@@ -332,8 +350,18 @@ const TableDataPelatihan: React.FC = () => {
           <div className={`${"flex"} flex items-center justify-center gap-1`}>
             <Button
               variant="outline"
-              className="ml-auto border border-[#000000]"
+              onClick={(e) => {
+                setSelectedId(row.original.id);
+                setIsOpenBarangPesanan(!isOpenBarangPesanan);
+              }}
+              className="ml-auto border border-[#000000] relative"
             >
+              {row.original.barangs.length > 0 && (
+                <div className="span bg-rose-500 rounded-full w-4 h-4 p-3 flex items-center justify-center text-white absolute -top-2 -right-2">
+                  {row.original.barangs.length}
+                </div>
+              )}
+
               <FaBoxOpen className="h-4 w-4" />
             </Button>
 
@@ -378,6 +406,21 @@ const TableDataPelatihan: React.FC = () => {
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
+
+            <Button
+              variant="outline"
+              onClick={(e) => {
+                if (row.original.barangs.length == 0) {
+                  Toast.fire({
+                    icon: "error",
+                    title: `Kamu belum mengentry data barang yang akan dipesan`,
+                  });
+                }
+              }}
+              className="ml-auto border border-blue-500"
+            >
+              <FaPaperPlane className="h-4 w-4 text-blue-500" />
+            </Button>
           </div>
         </div>
       ),
@@ -478,7 +521,53 @@ const TableDataPelatihan: React.FC = () => {
 
   React.useEffect(() => {
     handleFetchingDataPemesanan();
+    handleFetchingDataBarang();
   }, []);
+
+  const [isOpenBarangPesanan, setIsOpenBarangPesanan] =
+    React.useState<boolean>(false);
+
+  const [barangPesanan, setBarangPesanan] = React.useState<string>("");
+  const [selectedBarang, setSelectedBarang] = React.useState<string>("");
+  const [kuantitasPemesanan, setKuantitasPemesanan] =
+    React.useState<string>("");
+  const handleUploadDataBarangPemesanan = async (e: any) => {
+    const userId = Cookies.get("XSRF098888");
+
+    const data = new FormData();
+    data.append("id_pemesanan", selectedId.toString());
+    data.append("id_barang", barangPesanan);
+    data.append("kuantitas", kuantitasPemesanan);
+
+    try {
+      const response = await axios.post(
+        `${baseUrl}/api/barang-pemesanans`,
+        data
+      );
+      console.log("UPLOAD DATA BARANG PEMESANAN : ", response);
+      Toast.fire({
+        icon: "success",
+        title: `Sukses menambahkan data barang pesanan!`,
+      });
+      setIsOpenBarangPesanan(!isOpenBarangPesanan);
+      setSelectedId(0);
+      setBarangPesanan("");
+      setKuantitasPemesanan("");
+      handleFetchingDataPemesanan();
+    } catch (error) {
+      console.error("ERROR UPLOAD DATA BARANG PEMESANAN : ", error);
+      Toast.fire({
+        icon: "error",
+        title: `Gagal menambahkan data barang pesanan, harap coba lagi nanti!`,
+      });
+      setIsOpenBarangPesanan(!isOpenBarangPesanan);
+      setSelectedId(0);
+      setBarangPesanan("");
+      setKuantitasPemesanan("");
+      handleFetchingDataPemesanan();
+      throw error;
+    }
+  };
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default  sm:px-7.5 xl:col-span-8">
@@ -628,6 +717,96 @@ const TableDataPelatihan: React.FC = () => {
                   }}
                 >
                   {isUpdate ? "Update" : "Upload"}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </form>
+          </fieldset>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={isOpenBarangPesanan}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              {" "}
+              <FaBoxOpen className="h-4 w-4" />
+              Tambah Barang Pesanan
+            </AlertDialogTitle>
+            <AlertDialogDescription className="-mt-10">
+              Tambahkan data barang pesanan segera sekarang agar terlist riwayat
+              pemesanan yang masuk ke CV!
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <fieldset>
+            <form autoComplete="off">
+              <div className="flex flex-wrap mb-1 w-full">
+                <div className="w-full">
+                  <label
+                    className="block text-gray-800 text-sm font-medium mb-1"
+                    htmlFor="name"
+                  >
+                    Barang <span className="text-red-600">*</span>
+                  </label>
+
+                  <select
+                    value={barangPesanan}
+                    className="border border-gray-300 w-full rounded-md mb-1"
+                    onChange={(e) => setBarangPesanan(e.target.value)}
+                  >
+                    <option value="">
+                      {" "}
+                      <p className="mr-3 flex items-center gap-1 text-base">
+                        <FaBoxOpen />
+                        {selectedBarang == "" ? "Pilih Barang" : selectedBarang}
+                      </p>
+                    </option>
+                    {dataBarang.map((barang, index) => (
+                      <option
+                        value={barang.id.toString()}
+                        onClick={(e) => setSelectedBarang(barang.nama_barang)}
+                        key={index}
+                      >
+                        {barang.nama_barang} - Rp. {barang.harga_jual}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap mb-1 w-full">
+                <div className="w-full">
+                  <label
+                    className="block text-gray-800 text-sm font-medium mb-1"
+                    htmlFor="name"
+                  >
+                    Kuantitas <span className="text-red-600">*</span>
+                  </label>
+                  <input
+                    id="unit"
+                    type="number"
+                    className="form-input w-full text-black border-gray-300 rounded-md"
+                    placeholder={"Masukkan kuantitas pemesanan"}
+                    required
+                    value={kuantitasPemesanan}
+                    onChange={(e) => setKuantitasPemesanan(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <AlertDialogFooter className="mt-3">
+                <AlertDialogCancel
+                  onClick={(e) => {
+                    setIsOpenBarangPesanan(!isOpenBarangPesanan);
+                  }}
+                >
+                  Cancel
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={(e) => {
+                    handleUploadDataBarangPemesanan(e);
+                  }}
+                >
+                  Upload
                 </AlertDialogAction>
               </AlertDialogFooter>
             </form>

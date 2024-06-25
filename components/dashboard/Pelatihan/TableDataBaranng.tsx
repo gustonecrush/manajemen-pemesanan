@@ -309,7 +309,7 @@ const TableDataBarang: React.FC = () => {
         return (
           <Button
             variant="ghost"
-            className={`w-fit ml-2 text-gray-900 font-semibold`}
+            className={`w-fit ml-2 text-gray-900 font-semibold `}
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Action
@@ -441,7 +441,7 @@ const TableDataBarang: React.FC = () => {
   }, []);
 
   return (
-    <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default  sm:px-7.5 xl:col-span-8">
+    <div className="col-span-8 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default  sm:px-7.5 xl:col-span-8">
       <AlertDialog open={isOpenFormMateri}>
         <AlertDialogContent>
           <AlertDialogHeader>
