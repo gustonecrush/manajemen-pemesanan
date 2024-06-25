@@ -7,4 +7,5 @@ export type Pemesanan = {
   unit: number
   created_at: string
   updated_at: string
+  pemesan: string;
 }

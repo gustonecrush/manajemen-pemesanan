@@ -92,7 +92,7 @@ import Image from "next/image";
 import axios, { AxiosResponse } from "axios";
 import { Checkbox } from "@/components/ui/checkbox";
 import { PelatihanMasyarakat } from "@/types/product";
-import { FaBookOpen, FaRupiahSign } from "react-icons/fa6";
+import { FaBookOpen, FaBoxOpen, FaRupiahSign } from "react-icons/fa6";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -141,6 +141,7 @@ const TableDataPelatihan: React.FC = () => {
   const [tanggalPemesanan, setTanggalPemesanan] = React.useState<string>("");
   const [unitPemesanan, setUnitPemesanan] = React.useState<string>("");
   const [detailPemesanan, setDetailPemesanan] = React.useState<string>("");
+  const [pemesan, setPemesan] = React.useState<string>("");
 
   const handleUploadDataPemesanan = async (e: any) => {
     const userId = Cookies.get("XSRF098888");
@@ -151,6 +152,7 @@ const TableDataPelatihan: React.FC = () => {
     data.append("detail_pemesanan", detailPemesanan);
     data.append("tanggal_pemesanan", tanggalPemesanan);
     data.append("unit", unitPemesanan);
+    data.append("pemesan", pemesan);
 
     try {
       const response = await axios.post(`${baseUrl}/api/pemesanans`, data);
@@ -195,11 +197,81 @@ const TableDataPelatihan: React.FC = () => {
     }
   };
 
-  const [statusPelatihan, setStatusPelatihan] = React.useState("");
+  const [idSelectedPemesananUpdate, setIdSelectedPemesananUpdate] =
+    React.useState<number>(0);
+  const [isUpdate, setIsUpdate] = React.useState<boolean>(false);
+  const handleOpenFormUpdatePemesanan = async (e: any, id: number) => {
+    e.preventDefault();
+    setIdSelectedPemesananUpdate(id);
+    setIsUpdate(!isUpdate);
+    try {
+      const response: AxiosResponse = await axios.get(
+        `${baseUrl}/api/pemesanans/${id}`
+      );
+      setNamaPemesanan(response.data.pemesanan);
+      setDetailPemesanan(response.data.detail_pemesanan);
+      setTanggalPemesanan(response.data.tanggal_pemesanan);
+      setUnitPemesanan(response.data.unit);
+      setPemesan(response.data.pemesan);
+      setIsOpenFormMateri(!isOpenFormMateri);
+    } catch (error) {
+      console.error("ERROR GET BY ID PEMESANAN : ", error);
+      Toast.fire({
+        icon: "error",
+        title: `Data tidak ditemukan!`,
+      });
+      setIsUpdate(false);
+    }
+  };
 
-  const [namaMateri, setNamaMateri] = React.useState<string>("");
-  const [jamTeori, setJamTeori] = React.useState<string>("");
-  const [jamPraktek, setJamPraktek] = React.useState<string>("");
+  const handleUpdateDataPemesanan = async (e: any) => {
+    const userId = Cookies.get("XSRF098888");
+
+    const data = new FormData();
+    data.append("user_id", userId!);
+    data.append("pemesanan", namaPemesanan);
+    data.append("detail_pemesanan", detailPemesanan);
+    data.append("tanggal_pemesanan", tanggalPemesanan);
+    data.append("unit", unitPemesanan);
+    data.append("pemesan", pemesan);
+
+    try {
+      const response = await axios.post(
+        `${baseUrl}/api/pemesanans/${idSelectedPemesananUpdate}`,
+        data
+      );
+      console.log("UPDATE DATA PEMESANAN : ", response);
+      Toast.fire({
+        icon: "success",
+        title: `Sukses mengupdate data pemesanan!`,
+      });
+      setIsOpenFormMateri(!isOpenFormMateri);
+      handleFetchingDataPemesanan();
+      setIsUpdate(false);
+      setNamaPemesanan("");
+      setTanggalPemesanan("");
+      setDetailPemesanan("");
+      setPemesan("");
+      setUnitPemesanan("");
+      setIdSelectedPemesananUpdate(0);
+    } catch (error) {
+      console.error("ERROR UPLOAD DATA PEMESANAN : ", error);
+      Toast.fire({
+        icon: "error",
+        title: `Gagal megupdate data pemesanan, harap coba lagi nanti!`,
+      });
+      setIsOpenFormMateri(!isOpenFormMateri);
+      handleFetchingDataPemesanan();
+      setIsUpdate(false);
+      setNamaPemesanan("");
+      setTanggalPemesanan("");
+      setDetailPemesanan("");
+      setPemesan("");
+      setUnitPemesanan("");
+      setIdSelectedPemesananUpdate(0);
+      throw error;
+    }
+  };
 
   const [isOpenFormMateri, setIsOpenFormMateri] =
     React.useState<boolean>(false);
@@ -262,37 +334,16 @@ const TableDataPelatihan: React.FC = () => {
               variant="outline"
               className="ml-auto border border-[#000000]"
             >
-              <IoIosInformationCircle className="h-4 w-4" />
+              <FaBoxOpen className="h-4 w-4" />
             </Button>
 
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="ml-auto border border-yellow-400"
-                >
-                  <Edit3Icon className="h-4 w-4 text-yellow-400" />
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    Apakah kamu yakin menghapus data pemesanan ini?
-                  </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Penghapusan data ini akan dilakukan secara permanen,
-                    sehingga anda tidak dapat kembali melakukan undo terkait
-                    tindakan ini!
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Batal</AlertDialogCancel>
-                  <AlertDialogAction className="bg-rose-600">
-                    Hapus
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+            <Button
+              variant="outline"
+              onClick={(e) => handleOpenFormUpdatePemesanan(e, row.original.id)}
+              className="ml-auto border border-yellow-400"
+            >
+              <Edit3Icon className="h-4 w-4 text-yellow-400" />
+            </Button>
 
             <AlertDialog>
               <AlertDialogTrigger asChild>
@@ -374,13 +425,16 @@ const TableDataPelatihan: React.FC = () => {
       cell: ({ row }) => (
         <div className={`text-left`}>
           <p className="text-base font-semibold tracking-tight leading-none">
-            Dibuat pada {row.original.tanggal_pemesanan}
+            Dipesan oleh {row.original.pemesan}
+          </p>
+          <p className="text-xs text-gray-400 mt-1 leading-[100%] mb-1">
+            Pada tanggal {row.original.tanggal_pemesanan}
           </p>
         </div>
       ),
     },
     {
-      accessorKey: "tanggal_pemesanan",
+      accessorKey: "unit_pemesanan",
       header: ({ column }) => {
         return (
           <Button
@@ -434,11 +488,11 @@ const TableDataPelatihan: React.FC = () => {
             <AlertDialogTitle className="flex items-center gap-2">
               {" "}
               <TbShoppingCart className="h-4 w-4" />
-              Tambah Data Pemesanan
+              {isUpdate ? "Update Data Pemesanan" : "Tambah Data Pemesanan"}
             </AlertDialogTitle>
             <AlertDialogDescription className="-mt-10">
-              Tambahkan data pemesanan-mu segera sekarang agar terlist riwayat
-              pemesanan yang masuk ke CV!
+              {isUpdate ? "Update" : "Tambahkan"} data pemesanan-mu segera
+              sekarang agar terlist riwayat pemesanan yang masuk ke CV!
             </AlertDialogDescription>
           </AlertDialogHeader>
           <fieldset>
@@ -455,7 +509,9 @@ const TableDataPelatihan: React.FC = () => {
                     id="pemesanan"
                     type="text"
                     className="form-input w-full text-black border-gray-300 rounded-md"
-                    placeholder="Masukkan judul pemesanan"
+                    placeholder={
+                      isUpdate ? namaPemesanan : "Masukkan judul pemesanan"
+                    }
                     required
                     value={namaPemesanan}
                     onChange={(e) => setNamaPemesanan(e.target.value)}
@@ -463,7 +519,7 @@ const TableDataPelatihan: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex flex-wrap mb-1 w-full">
+              <div className="flex mb-1 gap-2 w-full">
                 <div className="w-full">
                   <label
                     className="block text-gray-800 text-sm font-medium mb-1"
@@ -481,6 +537,23 @@ const TableDataPelatihan: React.FC = () => {
                     onChange={(e) => setTanggalPemesanan(e.target.value)}
                   />
                 </div>
+                <div className="w-full">
+                  <label
+                    className="block text-gray-800 text-sm font-medium mb-1"
+                    htmlFor="name"
+                  >
+                    Pemesan <span className="text-red-600">*</span>
+                  </label>
+                  <input
+                    id="pemesan"
+                    type="text"
+                    className="form-input w-full text-black border-gray-300 rounded-md"
+                    placeholder={isUpdate ? pemesan : "Masukkan nama pemesan"}
+                    required
+                    value={pemesan}
+                    onChange={(e) => setPemesan(e.target.value)}
+                  />
+                </div>
               </div>
 
               <div className="flex flex-wrap mb-1 w-full">
@@ -495,7 +568,9 @@ const TableDataPelatihan: React.FC = () => {
                     id="unit"
                     type="number"
                     className="form-input w-full text-black border-gray-300 rounded-md"
-                    placeholder="Masukkan unit"
+                    placeholder={
+                      isUpdate ? unitPemesanan.toString() : "Masukkan unit"
+                    }
                     required
                     value={unitPemesanan}
                     onChange={(e) => setUnitPemesanan(e.target.value)}
@@ -515,7 +590,9 @@ const TableDataPelatihan: React.FC = () => {
                     rows={7}
                     id="detail_pemesanan"
                     className="form-input w-full text-black border-gray-300 rounded-md"
-                    placeholder="Masukkan detail pemesanan"
+                    placeholder={
+                      isUpdate ? detailPemesanan : "Masukkan detail pemesanan"
+                    }
                     required
                     value={detailPemesanan}
                     onChange={(e) => setDetailPemesanan(e.target.value)}
@@ -525,14 +602,32 @@ const TableDataPelatihan: React.FC = () => {
 
               <AlertDialogFooter className="mt-3">
                 <AlertDialogCancel
-                  onClick={(e) => setIsOpenFormMateri(!isOpenFormMateri)}
+                  onClick={(e) => {
+                    if (isUpdate) {
+                      setIsUpdate(!isUpdate);
+                      setNamaPemesanan("");
+                      setTanggalPemesanan("");
+                      setDetailPemesanan("");
+                      setPemesan("");
+                      setUnitPemesanan("");
+                      setIdSelectedPemesananUpdate(0);
+                      setIsOpenFormMateri(!isOpenFormMateri);
+                    } else {
+                      setIsUpdate(!isUpdate);
+                      setIsOpenFormMateri(!isOpenFormMateri);
+                    }
+                  }}
                 >
                   Cancel
                 </AlertDialogCancel>
                 <AlertDialogAction
-                  onClick={(e) => handleUploadDataPemesanan(e)}
+                  onClick={(e) => {
+                    isUpdate
+                      ? handleUpdateDataPemesanan(e)
+                      : handleUploadDataPemesanan(e);
+                  }}
                 >
-                  Upload
+                  {isUpdate ? "Update" : "Upload"}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </form>
