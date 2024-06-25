@@ -9,3 +9,13 @@ export type Pemesanan = {
   updated_at: string
   pemesan: string;
 }
+
+export type Barang = {
+  id: number
+  kode_barang: string
+  nama_barang: string
+  harga_jual: number
+  stok_barang: number
+  created_at: string
+  updated_at: string
+}
