@@ -19,8 +19,13 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
+
 <body>
+    @include('sweetalert::alert')
+
     <main class="w-full h-screen">
+
+
         @yield('content')
     </main>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -29,6 +34,8 @@
     <script>
         AOS.init();
     </script>
+
+
 </body>
 
 </html>

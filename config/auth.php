@@ -44,6 +44,10 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+        'mitra' => [
+            'driver' => 'session',
+            'provider' => 'mitras',
+        ],
     ],
 
     /*
@@ -76,6 +80,10 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
+        ],
+        'mitras' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Mitra::class,
         ],
     ],
 
