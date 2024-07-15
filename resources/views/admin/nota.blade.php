@@ -89,7 +89,7 @@
                         <div class="flex justify-between px-6 -mb-px items-center gap-2">
                             <h3
                                 class="text-blue-dark py-4 flex justify-between px-6 -mb-px items-center gap-2 font-normal text-lg">
-                                <i class='bx bxl-dropbox text-3xl'></i><span class="pf pf-invoice">Invoice</span>
+                                <i class='bx bxs-car text-xl'></i><span class="pf pf-invoice">Nota Jalan</span>
                                 Pemesanan CV
                                 Fajar Teknika
                             </h3>

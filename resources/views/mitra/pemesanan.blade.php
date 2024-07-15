@@ -99,8 +99,12 @@
                         <div class="flex justify-between px-6 -mb-px items-center gap-2">
                             <h3
                                 class="text-blue-dark py-4 flex justify-between px-6 -mb-px items-center gap-2 font-normal text-lg">
-                                <i class='bx bxl-dropbox text-3xl'></i>Data
-                                Barang CV
+                                <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24">
+                                    <path d="M8 7h10V5l4 3.5-4 3.5v-2H8V7zm-6 8.5L6 12v2h10v3H6v2l-4-3.5z"
+                                        fill-rule="nonzero" />
+                                </svg>Data
+                                Pemesanan CV
                                 Fajar Teknika
                             </h3>
                             <div class="flex">

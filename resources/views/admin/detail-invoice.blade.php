@@ -55,7 +55,7 @@
                 <div class="flex-grow flex flex-col bg-white border-t border-b sm:rounded sm:border shadow overflow-hidden">
                     <div class="">
                         <button id="export-btn" class="bg-blue-500 text-white px-4 py-2 rounded">
-                            Send and Save Invoice
+                            Send and Print Invoice
                         </button>
                     </div>
                     <div id="purchase-order" class="max-w-5xl mx-auto p-6 bg-white shadow-md mt-10">
