@@ -42,7 +42,7 @@
                                 <p class="text-sm text-gray-600">Mail: {{ $pemesanans->mitra->email }} Tlp:
                                     {{ $pemesanans->mitra->phone_number }}</p>
                             </div>
-                            <h2 class="text-3xl font-bold text-gray-800">DELIVERY ORDER</h2>
+                            <h2 class="text-3xl font-bold text-gray-800">INVOICE</h2>
                         </header>
 
                         <section class="mb-6">
