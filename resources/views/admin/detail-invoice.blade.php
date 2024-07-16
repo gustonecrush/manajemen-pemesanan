@@ -264,26 +264,32 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
     <script>
         document.getElementById('export-btn').addEventListener('click', function() {
-
-
             html2canvas(document.getElementById('purchase-order')).then(function(canvas) {
-                canvas.toBlob(function(blob) {
-                    var link = document.createElement('a');
-                    link.href = URL.createObjectURL(blob);
-                    link.download = 'purchase_order.png';
-                    link.click();
-                    URL.revokeObjectURL(link.href);
-                    Toastify({
-                        text: "Successfully downloaded PO",
-                        duration: 3000,
-                        gravity: "top",
-                        position: "right",
-                        backgroundColor: "#48bb78",
-                        stopOnFocus: true
-                    }).showToast();
-                });
+                const {
+                    jsPDF
+                } = window.jspdf;
+
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgData = canvas.toDataURL('image/png');
+                const imgProps = pdf.getImageProperties(imgData);
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                pdf.save('File.pdf');
+
+                Toastify({
+                    text: "Successfully downloaded file",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#48bb78",
+                    stopOnFocus: true
+                }).showToast();
             }).catch(error => {
                 console.error('Error:', error);
                 Toastify({
