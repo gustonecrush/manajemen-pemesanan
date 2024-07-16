@@ -19,31 +19,7 @@
                         </button>
 
                     </div>
-                    <div class="flex text-sm">
-                        <button type="button"
-                            class="appearance-none py-4 text-grey-dark border-b border-transparent hover:border-grey-dark mr-3">
-                            1M
-                        </button>
-                        <button type="button"
-                            class="appearance-none py-4 text-grey-dark border-b border-transparent hover:border-grey-dark mr-3">
-                            1D
-                        </button>
-                        <button type="button"
-                            class="appearance-none py-4 text-grey-dark border-b border-transparent hover:border-grey-dark mr-3">
-                            1W
-                        </button>
-                        <button type="button" class="appearance-none py-4 text-blue-dark border-b border-primary mr-3">
-                            1M
-                        </button>
-                        <button type="button"
-                            class="appearance-none py-4 text-grey-dark border-b border-transparent hover:border-grey-dark mr-3">
-                            1Y
-                        </button>
-                        <button type="button"
-                            class="appearance-none py-4 text-grey-dark border-b border-transparent hover:border-grey-dark">
-                            ALL
-                        </button>
-                    </div>
+                 
                 </div>
             </div>
 

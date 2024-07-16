@@ -6,7 +6,7 @@
 @section('content')
     <div class="flex-grow container mx-auto sm:px-4 pt-6 pb-8">
         <div class="bg-white border-t border-b sm:border-l sm:border-r sm:rounded shadow mb-6">
-            <div class="border-b px-6">
+            <div ss="border-b px-6">
                 <div class="flex justify-between -mb-px">
                     <div class="lg:hidden text-blue-dark py-4 text-lg">
                         Price Charts
@@ -19,31 +19,7 @@
                         </button>
 
                     </div>
-                    <div class="flex text-sm">
-                        <button type="button"
-                            class="appearance-none py-4 text-grey-dark border-b border-transparent hover:border-grey-dark mr-3">
-                            1M
-                        </button>
-                        <button type="button"
-                            class="appearance-none py-4 text-grey-dark border-b border-transparent hover:border-grey-dark mr-3">
-                            1D
-                        </button>
-                        <button type="button"
-                            class="appearance-none py-4 text-grey-dark border-b border-transparent hover:border-grey-dark mr-3">
-                            1W
-                        </button>
-                        <button type="button" class="appearance-none py-4 text-blue-dark border-b border-primary mr-3">
-                            1M
-                        </button>
-                        <button type="button"
-                            class="appearance-none py-4 text-grey-dark border-b border-transparent hover:border-grey-dark mr-3">
-                            1Y
-                        </button>
-                        <button type="button"
-                            class="appearance-none py-4 text-grey-dark border-b border-transparent hover:border-grey-dark">
-                            ALL
-                        </button>
-                    </div>
+                 
                 </div>
             </div>
 
