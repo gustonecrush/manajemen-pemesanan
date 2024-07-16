@@ -35,52 +35,6 @@ Route::get('/', function () {
     return view('index', compact('hasilProduksis'));
 })->name('index');
 
-Route::get('/admin/export/suppliers', [AdminDashboardController::class, 'exportSuppliers'])->name('admin.export.suppliers');
-Route::get('/admin/export/raw-materials', [AdminDashboardController::class, 'exportRawMaterials'])->name('admin.export.raw_materials');
-Route::get('/admin/export/production-results', [AdminDashboardController::class, 'exportProductionResults'])->name('admin.export.production_results');
-
-
-Route::get('/admin/dashboard2', [AdminDashboardController::class, 'dashboard'])->name('admin.dashboard2');
-Route::get('/admin/dashboard/data', [AdminDashboardController::class, 'getData'])->name('admin.dashboard.data');
-Route::get('/admin/admins', [AdminDashboardController::class, 'index'])->name('admin.admins');
-Route::post('/admin/admins', [AdminDashboardController::class, 'store'])->name('admin.admins.store');
-Route::put('/admin/admins', [AdminDashboardController::class, 'update'])->name('admin.admins.update');
-Route::delete('/admin/admins', [AdminDashboardController::class, 'destroy'])->name('admin.admins.delete');
-
-
-Route::get('/admin/login', [AdminAuthController::class, 'index']);
-Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login');
-
-Route::get('/admin/hotel-mekah', [HotelMekahController::class, 'index'])->name('admin.hotel-mekah');
-Route::post('/admin/hotel-mekah', [HotelMekahController::class, 'store'])->name('admin.hotel-mekah.store');
-Route::post('/admin/hotel-mekah/update', [HotelMekahController::class, 'update'])->name('admin.hotel-mekah.update');
-Route::delete('/admin/hotel-mekah/{id}', [HotelMekahController::class, 'destroy'])->name('admin.hotel-mekah.delete');
-
-Route::get('/admin/hotel-madinah', [HotelMadinahController::class, 'index'])->name('admin.hotel-madinah');
-Route::post('/admin/hotel-madinah', [HotelMadinahController::class, 'store'])->name('admin.hotel-madinah.store');
-Route::put('/admin/hotel-madinah', [HotelMadinahController::class, 'update'])->name('admin.hotel-madinah.update');
-Route::delete('/admin/hotel-madinah/{id}', [HotelMadinahController::class, 'destroy'])->name('admin.hotel-madinah.delete');
-
-Route::get('/admin/bahan-mentah', [BahanMentahController::class, 'index'])->name('admin.bahan-mentah');
-Route::post('/admin/bahan-mentah', [BahanMentahController::class, 'store'])->name('admin.bahan-mentah.store');
-Route::put('/admin/bahan-mentah', [BahanMentahController::class, 'update'])->name('admin.bahan-mentah.update');
-Route::delete('/admin/bahan-mentah', [BahanMentahController::class, 'destroy'])->name('admin.bahan-mentah.delete');
-
-Route::get('/admin/supplier', [SupplierController::class, 'index'])->name('admin.supplier');
-Route::post('/admin/supplier', [SupplierController::class, 'store'])->name('admin.supplier.store');
-Route::put('/admin/supplier', [SupplierController::class, 'update'])->name('admin.supplier.update');
-Route::delete('/admin/supplier/{id}', [SupplierController::class, 'destroy'])->name('admin.supplier.delete');
-
-Route::get('/admin/hasil-produksi', [HasilProduksiController::class, 'index'])->name('admin.hasil-produksi');
-Route::post('/admin/hasil-produksi', [HasilProduksiController::class, 'store'])->name('admin.hasil-produksi.store');
-Route::put('/admin/hasil-produksi', [HasilProduksiController::class, 'update'])->name('admin.hasil-produksi.update');
-Route::delete('/admin/hasil-produksi', [HasilProduksiController::class, 'destroy'])->name('admin.hasil-produksi.delete');
-
-Route::get('/admin/paket-umrah', [PaketUmrahController::class, 'index'])->name('admin.paket-umrah');
-Route::post('/admin/paket-umrah', [PaketUmrahController::class, 'store'])->name('admin.paket-umrah.store');
-Route::put('/admin/paket-umrah', [PaketUmrahController::class, 'update'])->name('admin.paket-umrah.update');
-Route::delete('/admin/paket-umrah', [PaketUmrahController::class, 'destroy'])->name('admin.paket-umrah.delete');
-
 // =============================== MITRA ===============================
 Route::get('/mitra/register', [MitraController::class, 'registerPage'])->name('mitra.registerPage');
 Route::post('/mitra/register', [MitraController::class, 'register'])->name('mitra.register');
